@@ -325,7 +325,9 @@ function cerrarModal(){
 
 function ejecutarToggle(){
   if(!pendingToggle) return;
+  var toggle = { dominio: pendingToggle.dominio, nuevoEstado: pendingToggle.nuevoEstado };
   cerrarModal();
+  pendingToggle = toggle;
   document.getElementById("loadingBar").classList.add("active");
   var cbName = "tCb"+Date.now();
   window[cbName] = function(data){
