@@ -322,7 +322,7 @@ function confirmarToggle(dominio, negocio, nuevoEstado){
   document.getElementById("modalMsg").textContent = nuevoEstado==="SUSPENDIDO"
     ? "Suspender acceso de "+negocio+"? El panel quedara bloqueado."
     : "Activar acceso de "+negocio+"? El panel vuelve a funcionar.";
-  document.getElementById("modalConfirm").onclick = ejecutarToggle;
+  document.getElementById("modalConfirm").addEventListener("click", ejecutarToggle);
   document.getElementById("modalOverlay").classList.add("visible");
 }
 
@@ -336,6 +336,7 @@ function ejecutarToggle(){
   var toggle = { dominio: pendingToggle.dominio, nuevoEstado: pendingToggle.nuevoEstado };
   cerrarModal();
   pendingToggle = toggle;
+  console.log("Toggle:", toggle.dominio, toggle.nuevoEstado);
   document.getElementById("loadingBar").classList.add("active");
   var cbName = "tCb"+Date.now();
   window[cbName] = function(data){
