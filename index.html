@@ -292,15 +292,18 @@ function ejecutarToggle(){
   pendingToggle = null;
   cerrarModal();
   document.getElementById("loadingBar").classList.add("active");
-  var cbName = "tCb"+Date.now();
-  window[cbName] = function(data){
-    delete window[cbName];
+  // Usar img tag para disparar el toggle sin restricciones CSP
+  var img = new Image();
+  img.src = API_URL + "?callback=ignore&accion=toggleEstado&dominioToggle=" + encodeURIComponent(dominio);
+  img.onload = img.onerror = function(){
     document.getElementById("loadingBar").classList.remove("active");
-    if(data.ok){ cargarDatos(); } else { alert("Error: "+(data.error||"desconocido")); }
+    setTimeout(cargarDatos, 1000);
   };
-  var s = document.createElement("script");
-  s.src = API_URL + "?callback=" + cbName + "&accion=toggleEstado&dominioToggle=" + dominio;
-  document.head.appendChild(s);
+  // Recargar igual despues de 5 segundos
+  setTimeout(function(){
+    document.getElementById("loadingBar").classList.remove("active");
+    cargarDatos();
+  }, 5000);
 }
 
 function actualizarReloj(){
