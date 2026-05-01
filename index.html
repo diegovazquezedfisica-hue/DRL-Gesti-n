@@ -344,9 +344,9 @@ function ejecutarToggle(){
     document.getElementById("loadingBar").classList.remove("active");
     if(data.ok){ cargarDatos(); } else { alert("Error: "+(data.error||"desconocido")); }
   };
-  var params = new URLSearchParams({ callback: cbName, accion: "toggleEstado", dominioToggle: toggle.dominio });
   var s = document.createElement("script");
-  s.src = API_URL + "?" + params.toString();
+  s.src = API_URL + "?callback=" + cbName + "&accion=toggleEstado&dominioToggle=" + encodeURIComponent(toggle.dominio);
+  console.log("URL:", s.src);
   document.head.appendChild(s);
 }
 
