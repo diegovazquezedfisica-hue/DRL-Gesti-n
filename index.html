@@ -307,9 +307,9 @@ function renderDashboard(data){
       : "<span class='badge'>-</span>";
     var btnToggle = "";
     if(cr){
-      var crUrl = String(cr[0]||"").trim();
-      if(estado==="ACTIVO") btnToggle = "<button class='btn-toggle suspender' data-dominio='"+crUrl+"' data-negocio='"+negocio+"' data-nuevo='SUSPENDIDO'>Suspender</button>";
-      else btnToggle = "<button class='btn-toggle activar' data-dominio='"+crUrl+"' data-negocio='"+negocio+"' data-nuevo='ACTIVO'>Activar</button>";
+      var crDom = String(cr[0]||"").trim().replace(/https?:\/\//,"").split("/")[0].toLowerCase();
+      if(estado==="ACTIVO") btnToggle = "<button class='btn-toggle suspender' data-dominio='"+crDom+"' data-negocio='"+negocio+"' data-nuevo='SUSPENDIDO'>Suspender</button>";
+      else btnToggle = "<button class='btn-toggle activar' data-dominio='"+crDom+"' data-negocio='"+negocio+"' data-nuevo='ACTIVO'>Activar</button>";
     }
     return "<tr><td style='color:var(--gray);font-size:11px'>"+(i+1)+"</td><td class='td-negocio'>"+negocio+"</td><td class='td-rubro'>"+rubro+"</td><td style='font-size:11px'>"+contacto+"</td><td class='td-url'>"+(url?"<a href='"+url+"' target='_blank'>Abrir</a>":"-")+"</td><td>"+badge+"</td><td class='td-venc "+vencClass+"'>"+vencTxt+"</td><td style='font-size:11px;color:var(--gold)'>"+plan+"</td><td style='font-size:10px'>"+notas+"</td><td>"+btnToggle+"</td></tr>";
   }).join("");
