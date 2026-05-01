@@ -347,10 +347,12 @@ function ejecutarToggle(){
     document.getElementById("loadingBar").classList.remove("active");
     if(data.ok){ cargarDatos(); } else { alert("Error: "+(data.error||"desconocido")); }
   };
-  var s = document.createElement("script");
-  s.src = API_URL + "?callback=" + cbName + "&accion=toggleEstado&dominioToggle=" + encodeURIComponent(toggle.dominio);
-  console.log("URL:", s.src);
-  document.head.appendChild(s);
+ var s = document.createElement("script");
+s.src = API_URL + "?callback=" + cbName + "&accion=toggleEstado&dominioToggle=" + encodeURIComponent(toggle.dominio);
+console.log("URL:", s.src);
+s.onload = function(){ console.log("Script cargado"); };
+s.onerror = function(){ console.log("Script ERROR"); };
+document.head.appendChild(s);
 }
 
 document.getElementById("loginBtn").addEventListener("click", verificarPass);
