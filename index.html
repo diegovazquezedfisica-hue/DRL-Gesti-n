@@ -827,6 +827,7 @@
     <li><a href="#planes">Planes</a></li>
     <li><a href="#proceso">Proceso</a></li>
     <li><a href="#" id="nav-acceso-btn" class="nav-access">Acceso Clientes</a></li>
+    <li><a href="#" id="nav-drl-btn" class="nav-access" style="border-color:var(--gold-dim);color:var(--gold-dim)">Acceso Exclusivo</a></li>
     <li><a href="#contacto" class="nav-cta">Hablar por WhatsApp</a></li>
   </ul>
 </nav>
@@ -1188,6 +1189,16 @@
   var drlError = document.getElementById('drl-error');
 
   btnDRL.addEventListener('click', function() {
+    drlInput.value = '';
+    drlError.style.display = 'none';
+    modalDRL.classList.add('active');
+    setTimeout(function(){ drlInput.focus(); }, 200);
+  });
+
+  // Nav Acceso Exclusivo button
+  var btnNavDRL = document.getElementById('nav-drl-btn');
+  btnNavDRL.addEventListener('click', function(e) {
+    e.preventDefault();
     drlInput.value = '';
     drlError.style.display = 'none';
     modalDRL.classList.add('active');
