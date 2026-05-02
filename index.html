@@ -135,7 +135,7 @@
     align-items: center;
     justify-content: center;
     background: var(--surface);
-    margin: 0 auto 28px;
+    margin: 0 auto 48px;
     position: relative;
   }
 
@@ -1356,6 +1356,83 @@
       modalNC.classList.remove('active');
       modalDRL.classList.remove('active');
     }
+  });
+</script>
+
+<!-- AUDIO AMBIENTE -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="https://diegovazquezedfisica-hue.github.io/DRL-Gestion/exventry-sol-de-veranomp3_320k-451653.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Botón mute flotante -->
+<button id="audio-btn" title="Música" style="
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:rgba(10,10,10,0.8);
+  border:1px solid rgba(201,168,76,0.3);
+  color:var(--gold);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  backdrop-filter:blur(8px);
+  transition:border-color .2s;
+  opacity:0;
+">
+  <svg id="audio-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+  </svg>
+  <svg id="audio-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:none">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+</button>
+
+<script>
+  var audio = document.getElementById('bg-audio');
+  var audioBtn = document.getElementById('audio-btn');
+  var iconOn = document.getElementById('audio-icon-on');
+  var iconOff = document.getElementById('audio-icon-off');
+  var audioStarted = false;
+  var muted = false;
+
+  audio.volume = 0;
+
+  function startAudio() {
+    if (audioStarted) return;
+    audioStarted = true;
+    audio.play().then(function() {
+      // Fade in suave
+      var vol = 0;
+      var fade = setInterval(function() {
+        vol = Math.min(vol + 0.02, 0.35);
+        audio.volume = vol;
+        if (vol >= 0.35) clearInterval(fade);
+      }, 80);
+      // Mostrar botón mute
+      audioBtn.style.opacity = '1';
+    }).catch(function(){});
+  }
+
+  // Arrancar al primer clic o tap en cualquier lado
+  document.addEventListener('click', startAudio, { once: true });
+  document.addEventListener('touchstart', startAudio, { once: true });
+
+  // Botón mute/unmute
+  audioBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    muted = !muted;
+    audio.volume = muted ? 0 : 0.35;
+    iconOn.style.display = muted ? 'none' : 'block';
+    iconOff.style.display = muted ? 'block' : 'none';
   });
 </script>
 
